@@ -1,0 +1,5 @@
+load("@rules_graalvm//graalvm:defs.bzl", "graalvm_test")
+
+graalvm_test(
+    name = "smoke_test",
+)

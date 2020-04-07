@@ -1,0 +1,11 @@
+PLATFORM_CONSTRAINTS = [
+    "@platforms//os:linux",
+    "@platforms//cpu:x86_64",
+]
+
+toolchain(
+    name = "x86_64",
+    target_compatible_with = PLATFORM_CONSTRAINTS,
+    toolchain = "@graalvm_linux_x86_64//:graalvm_runtime_toolchain",
+    toolchain_type = "@rules_graalvm//graalvm/toolchains/runtime:toolchain_type",
+)

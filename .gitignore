@@ -1,0 +1,5 @@
+.ijwb/
+bazel-bin
+bazel-out
+bazel-rules_graalvm
+bazel-testlogs
