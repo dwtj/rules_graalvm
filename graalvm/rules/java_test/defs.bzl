@@ -1,7 +1,7 @@
 JAVA_TEST_SCRIPT_TEMPLATE = "//graalvm/rules/java_test:java_test_script.sh.template"
 
 def _graalvm_java_test_impl(ctx):
-    graalvm_executable = ctx.toolchains["@rules_graalvm//graalvm/toolchains/runtime:toolchain_type"].graalvm_runtime_toolchain_info.graalvm_executable
+    java = ctx.toolchains["@rules_graalvm//graalvm/toolchains/runtime:toolchain_type"].graalvm_runtime_toolchain_info.graalvm_java_executable
 
     # TODO(dwtj): Not yet implemented. Always just prints VM version.
     script = ctx.actions.declare_file(ctx.attr.name + "_java_test_script.sh")
@@ -9,13 +9,13 @@ def _graalvm_java_test_impl(ctx):
         output = script,
         template = ctx.file._test_script_template,
         substitutions = {
-            "{GRAALVM_EXECUTABLE}": graalvm_executable.path,
+            "{GRAALVM_JAVA_EXECUTABLE}": java.path,
         },
         is_executable = True,
     )
 
     runfiles = ctx.runfiles(
-        files = [graalvm_executable],
+        files = [java],
         # TODO(dwtj): carry forward needed transitive runfiles
         #transitive_files = ctx.attr.something[SomeProviderInfo].depset_of_files,
     )
