@@ -1,0 +1,3 @@
+load("@rules_graalvm//graalvm/repositories:defs.bzl", "default_graalvm_repository")
+
+default_graalvm_repository()

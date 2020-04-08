@@ -1,0 +1,7 @@
+"""`rules_graalvm` can be used to fetch GraalVM CE distributions (i.e. release
+binaries) and to configure them as toolchains. Resources in this package support
+that process.
+
+- The `graalvm_*.BUILD.bazel` files are meant to be used as the `build_file`
+attribute of an `http_archive` workspace rule.
+"""
