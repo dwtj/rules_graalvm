@@ -4,7 +4,16 @@ PLATFORM_CONSTRAINTS = [
 ]
 
 toolchain(
+    name = "graalvm_compiler_toolchain",
+    exec_compatible_with = PLATFORM_CONSTRAINTS,
+    target_compatible_with = PLATFORM_CONSTRAINTS,
+    toolchain = "@graalvm_linux_x86_64//:graalvm_compiler_toolchain",
+    toolchain_type = "@rules_graalvm//graalvm/toolchains/compiler:toolchain_type",
+)
+
+toolchain(
     name = "graalvm_runtime_toolchain",
+    exec_compatible_with = PLATFORM_CONSTRAINTS,
     target_compatible_with = PLATFORM_CONSTRAINTS,
     toolchain = "@graalvm_linux_x86_64//:graalvm_runtime_toolchain",
     toolchain_type = "@rules_graalvm//graalvm/toolchains/runtime:toolchain_type",

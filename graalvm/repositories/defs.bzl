@@ -1,4 +1,28 @@
-load("@rules_graalvm//graalvm:defs.bzl", "graalvm_runtime_toolchain")
+load("@rules_java//java:defs.bzl",
+     "java_import",
+)
+
+load("@rules_graalvm//graalvm:defs.bzl",
+     "graalvm_runtime_toolchain",
+     "graalvm_compiler_toolchain",
+)
+
+def _configure_compiler_toolchain(srcs):
+    java_import(
+        name = "truffle_api",
+        jars = ["//:lib/truffle/truffle-api.jar"],
+    )
+    graalvm_compiler_toolchain(
+        name = "graalvm_compiler_toolchain",
+        graalvm_truffle_api = ":truffle_api",
+    )
+
+def _configure_runtime_toolchain(srcs):
+    graalvm_runtime_toolchain(
+        name = "graalvm_runtime_toolchain",
+        graalvm_java_executable = "//:bin/java",
+        srcs = srcs,
+    )
 
 def default_graalvm_repository(srcs):
     """Used to declare that a GraalVM repository provides some toolchains.
@@ -11,9 +35,6 @@ def default_graalvm_repository(srcs):
     repository. For example, this function is used to declare
     `@graalvm_linux_x86_64//:graalvm_runtime_toolchain`.
     """
+    _configure_compiler_toolchain(srcs)
+    _configure_runtime_toolchain(srcs)
 
-    graalvm_runtime_toolchain(
-        name = "graalvm_runtime_toolchain",
-        graalvm_java_executable = "//:bin/java",
-        srcs = srcs,
-    )

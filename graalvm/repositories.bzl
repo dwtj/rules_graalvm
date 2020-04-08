@@ -30,3 +30,4 @@ def rules_graalvm_dependencies():
 
 def rules_graalvm_toolchain():
     native.register_toolchains("@rules_graalvm//graalvm/toolchains/remote/linux/x86_64:graalvm_runtime_toolchain")
+    native.register_toolchains("@rules_graalvm//graalvm/toolchains/remote/linux/x86_64:graalvm_compiler_toolchain")
