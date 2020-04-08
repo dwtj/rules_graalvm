@@ -1,5 +1,5 @@
-load("@rules_graalvm//graalvm:defs.bzl", "graalvm_test")
+load("@rules_graalvm//graalvm:defs.bzl", "graalvm_java_test")
 
-graalvm_test(
+graalvm_java_test(
     name = "smoke_test",
 )
