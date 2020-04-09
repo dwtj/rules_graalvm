@@ -24,8 +24,9 @@ def _graalvm_java_test_impl(ctx):
 graalvm_java_test = rule(
     implementation = _graalvm_java_test_impl,
     attrs = {
-        "srcs": attr.label_list(
-            allow_files = True,
+        "java_binary": attr.label(
+            mandatory = True,
+            providers = [JavaInfo]
         ),
         "_test_script_template": attr.label(
             allow_single_file = True,
