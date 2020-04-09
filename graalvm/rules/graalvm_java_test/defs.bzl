@@ -22,7 +22,8 @@ def _graalvm_java_test_impl(ctx):
 
     [Bazel Docs: Executable Rules and Test Rules](https://docs.bazel.build/versions/3.0.0/skylark/rules.html#executable-rules-and-test-rules),
     """
-    toolchain_info = ctx.toolchains["@rules_graalvm//graalvm/toolchains/runtime:toolchain_type"].graalvm_runtime_toolchain_info
+    toolchain_type = "@rules_graalvm//graalvm/toolchains/runtime:toolchain_type"
+    toolchain_info = ctx.toolchains[toolchain_type].graalvm_runtime_toolchain_info
 
     java = toolchain_info.graalvm_java_executable
     template = toolchain_info.graalvm_java_test_script_template
