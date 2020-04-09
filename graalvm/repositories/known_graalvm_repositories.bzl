@@ -1,7 +1,7 @@
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-def fetch_known_graalvm_releases():
+def fetch_known_graalvm_repositories():
     maybe(
         http_archive,
         name = "graalvm_linux_x86_64",

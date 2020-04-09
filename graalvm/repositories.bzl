@@ -1,7 +1,6 @@
-load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-load("@rules_graalvm//graalvm/repositories:known_graalvm_releases.bzl", "fetch_known_graalvm_releases")
+load("@rules_graalvm//graalvm/repositories:known_graalvm_repositories.bzl", "fetch_known_graalvm_repositories")
 
 def _fetch_custom_rules_java():
     # NB(dwtj): `me_dwtj_rules_java` is a fork of `rules_java`. It includes a
@@ -22,12 +21,12 @@ def _fetch_custom_rules_java():
         name = "me_dwtj_rules_java",
         sha256 = ME_DWTJ_RULES_JAVA_SHA256,
         strip_prefix = "rules_java-{}".format(ME_DWTJ_RULES_JAVA_COMMIT),
-        url = "https://github.com/dwtj/archive/{}.zip".format(ME_DWTJ_RULES_JAVA_COMMIT),
+        url = "https://github.com/dwtj/rules_java/archive/{}.zip".format(ME_DWTJ_RULES_JAVA_COMMIT),
     )
 
 def rules_graalvm_dependencies():
     _fetch_custom_rules_java()
-    fetch_known_graalvm_releases()
+    fetch_known_graalvm_repositories()
 
 def rules_graalvm_toolchain():
-    native.register_toolchains("@rules_graalvm//graalvm/toolchains/runtime/linux/x86_64")
+    native.register_toolchains("@rules_graalvm//graalvm/toolchains/remote/linux/x86_64:graalvm_runtime_toolchain")
