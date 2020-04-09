@@ -1,3 +1,6 @@
 load("@rules_graalvm//graalvm/repositories:defs.bzl", "default_graalvm_repository")
 
-default_graalvm_repository()
+default_graalvm_repository(
+    # TODO(dwtj): Don't include unnecessary sources.
+    srcs = glob(["**"], allow_empty = False)
+)
