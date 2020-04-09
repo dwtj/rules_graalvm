@@ -1,2 +1,0 @@
-#!/bin/sh
-{GRAALVM_JAVA_EXECUTABLE} -version

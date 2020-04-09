@@ -1,5 +1,3 @@
-JAVA_TEST_SCRIPT_TEMPLATE = "//graalvm/rules/graalvm_java_test:graalvm_java_test_script.sh.template"
-
 def _graalvm_java_test_impl(ctx):
     """Write a test script and declare it to be this rule instance's executable.
 
@@ -24,22 +22,35 @@ def _graalvm_java_test_impl(ctx):
 
     [Bazel Docs: Executable Rules and Test Rules](https://docs.bazel.build/versions/3.0.0/skylark/rules.html#executable-rules-and-test-rules),
     """
+    toolchain_info = ctx.toolchains["@rules_graalvm//graalvm/toolchains/runtime:toolchain_type"].graalvm_runtime_toolchain_info
 
-    java = ctx.toolchains["@rules_graalvm//graalvm/toolchains/runtime:toolchain_type"].graalvm_runtime_toolchain_info.graalvm_java_executable
+    java = toolchain_info.graalvm_java_executable
+    template = toolchain_info.graalvm_java_test_script_template
 
-    # TODO(dwtj): Not yet implemented. Always just prints VM version.
-    script = ctx.actions.declare_file(ctx.attr.name + ".graalvm_java_test_script.sh")
+    script = ctx.actions.declare_file(ctx.attr.name + ".graalvm_java_test.sh")
+    args_file = ctx.actions.declare_file(ctx.attr.name + ".graalvm_java_test.args")
+
     ctx.actions.expand_template(
         output = script,
-        template = ctx.file._test_script_template,
+        template = template,
         substitutions = {
             "{GRAALVM_JAVA_EXECUTABLE}": java.path,
+            "{ARGUMENTS_FILE}": args_file.short_path,
         },
         is_executable = True,
     )
 
+    ctx.actions.write(
+        output = args_file,
+        content = "-version",
+        is_executable = False,
+    )
+
     runfiles = ctx.runfiles(
-        files = [java],
+        files = [
+            java,
+            args_file,
+        ],
         # TODO(dwtj): carry forward needed transitive runfiles
         #transitive_files = ctx.attr.something[SomeProviderInfo].depset_of_files,
     )
@@ -51,11 +62,6 @@ graalvm_java_test = rule(
         "java_binary": attr.label(
             mandatory = True,
             providers = [JavaInfo]
-        ),
-        "_test_script_template": attr.label(
-            allow_single_file = True,
-            # TODO(dwtj): Maybe get the test script template from the toolchain.
-            default = Label(JAVA_TEST_SCRIPT_TEMPLATE),
         ),
     },
     test = True,
