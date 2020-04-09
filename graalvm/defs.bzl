@@ -1,6 +1,6 @@
-load("//graalvm/rules/runtime_toolchain:defs.bzl",
+load("//graalvm/rules/graalvm_runtime_toolchain:defs.bzl",
      _graalvm_runtime_toolchain = "graalvm_runtime_toolchain")
-load("//graalvm/rules/java_test:defs.bzl",
+load("//graalvm/rules/graalvm_java_test:defs.bzl",
      _graalvm_java_test = "graalvm_java_test")
 
 graalvm_runtime_toolchain = _graalvm_runtime_toolchain

@@ -1,0 +1,1 @@
+exports_files(["graalvm_java_test_script.sh.template"])
