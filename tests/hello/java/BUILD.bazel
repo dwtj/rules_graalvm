@@ -1,0 +1,14 @@
+load("@rules_java//java:defs.bzl", "java_binary")
+
+load("@rules_graalvm//graalvm:defs.bzl", "graalvm_java_test")
+
+java_binary(
+    name = "hello",
+    srcs = ["Hello.java"],
+    main_class = "hello.java.Hello",
+)
+
+graalvm_java_test(
+    name = "smoke_test",
+    java_binary = ":hello",
+)
