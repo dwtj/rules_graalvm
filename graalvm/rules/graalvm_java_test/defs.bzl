@@ -41,9 +41,14 @@ def _graalvm_java_test_impl(ctx):
         is_executable = True,
     )
 
+    # Build an arguments list.
+    args = ctx.actions.args()
+    # TODO(dwtj): Everything!
+    args.add("-version")
+
     ctx.actions.write(
         output = args_file,
-        content = "-version",
+        content = args,
         is_executable = False,
     )
 
