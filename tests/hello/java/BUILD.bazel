@@ -5,7 +5,13 @@ load("@rules_graalvm//graalvm:defs.bzl", "graalvm_java_test")
 java_binary(
     name = "hello",
     srcs = ["Hello.java"],
+    deps = [":greeter"],
     main_class = "hello.java.Hello",
+)
+
+java_library(
+    name = "greeter",
+    srcs = ["Greeter.java"],
 )
 
 graalvm_java_test(
