@@ -63,7 +63,8 @@ def _graalvm_java_test_impl(ctx):
     args.add_joined(
         "-classpath",
         runtime_classpath,
-        join_with = ";",
+        # TODO(dwtj): The classpath separator is ; on Windows.
+        join_with = ":",
         omit_if_empty = True,
         map_each = _to_short_path,
     )
