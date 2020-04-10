@@ -10,5 +10,6 @@ java_binary(
 
 graalvm_java_test(
     name = "smoke_test",
-    java_binary = ":hello",
+    java_deps = [":hello"],
+    main_class = "hello.java.Hello",
 )
