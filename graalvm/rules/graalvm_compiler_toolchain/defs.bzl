@@ -1,12 +1,12 @@
 GraalVmCompilerToolchainInfo = provider(
     doc = "Information about how to invoke the GraalVM.",
-    fields = ["graalvm_graalvm_truffle_api"],
+    fields = ["graalvm_truffle_api"],
 )
 
 def _graalvm_compiler_toolchain_impl(ctx):
     toolchain_info = platform_common.ToolchainInfo(
         graalvm_compiler_toolchain_info = GraalVmCompilerToolchainInfo(
-            graalvm_graalvm_truffle_api = ctx.attr.graalvm_truffle_api,
+            graalvm_truffle_api = ctx.attr.graalvm_truffle_api,
         ),
     )
     return [toolchain_info]

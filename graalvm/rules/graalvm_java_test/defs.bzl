@@ -1,3 +1,7 @@
+load("//graalvm/rules/graalvm_truffle_instrument:defs.bzl",
+     "GraalVmTruffleInstrumentInfo",
+)
+
 def _to_short_path(classpath_item):
     """Used as a map function to convert a file to its short path.
     """
@@ -28,8 +32,10 @@ def _graalvm_java_test_impl(ctx):
 
     [Bazel Docs: Executable Rules and Test Rules](https://docs.bazel.build/versions/3.0.0/skylark/rules.html#executable-rules-and-test-rules),
     """
+    # TODO(dwtj): Use TruffleInstruments
 
     # Build classpath depset:
+    # TODO(dwtj): Re-implement this using `java_common.merge()`
     runtime_classpath = depset(
         transitive = [dep[JavaInfo].compilation_info.runtime_classpath for dep in ctx.attr.java_deps]
     )
@@ -100,6 +106,9 @@ graalvm_java_test = rule(
         "java_deps": attr.label_list(
             providers = [JavaInfo]
         ),
+        "truffle_instruments": attr.label_list(
+            providers = [GraalVmTruffleInstrumentInfo],
+        )
     },
     test = True,
     toolchains = ["@rules_graalvm//graalvm/toolchains/runtime:toolchain_type"],

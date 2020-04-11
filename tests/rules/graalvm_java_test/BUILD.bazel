@@ -1,0 +1,7 @@
+load("@rules_graalvm//graalvm:defs.bzl", "graalvm_java_test")
+
+graalvm_java_test(
+    name = "smoke_test",
+    java_deps = ["//tests/test_targets/trivial_java_targets:main"],
+    main_class = "trivial_java_targets.Main",
+)

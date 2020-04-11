@@ -1,0 +1,11 @@
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+load("@rules_java//java:defs.bzl", "java_library")
+
+java_library(
+    name = "trivial_truffle_instrument",
+    srcs = ["TrivialTruffleInstrument.java"],
+    # TODO(dwtj): Get truffle-api from somewhere, probably Maven Central.
+)

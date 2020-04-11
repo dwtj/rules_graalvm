@@ -1,0 +1,16 @@
+load("@rules_graalvm//graalvm:defs.bzl",
+     "graalvm_truffle_instrument",
+     "graalvm_java_test",
+)
+
+graalvm_truffle_instrument(
+    name = "trivial_truffle_instrument",
+    java_library = "//tests/test_targets/trivial_truffle_instrument"
+)
+
+graalvm_java_test(
+    name = "smoke_test",
+    main_class = "trivial_java_targets.Main",
+    java_deps = ["//tests/test_targets/trivial_java_targets:main"],
+    truffle_instruments = [":trivial_truffle_instrument"],
+)
