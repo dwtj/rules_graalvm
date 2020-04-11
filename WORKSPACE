@@ -47,12 +47,12 @@ bazel_stardoc_setup()
 load(
     "//graalvm:repositories.bzl",
     "rules_graalvm_dependencies",
-    "rules_graalvm_toolchain",
+    "rules_graalvm_toolchains",
 )
 
 rules_graalvm_dependencies()
 
-rules_graalvm_toolchain()
+rules_graalvm_toolchains()
 
 
 # FETCH SOME TEST DEPENDENCIES FROM MAVEN CENTRAL #############################
