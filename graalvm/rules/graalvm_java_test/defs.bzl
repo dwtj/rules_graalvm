@@ -32,12 +32,23 @@ def _graalvm_java_test_impl(ctx):
 
     [Bazel Docs: Executable Rules and Test Rules](https://docs.bazel.build/versions/3.0.0/skylark/rules.html#executable-rules-and-test-rules),
     """
-    # TODO(dwtj): Use TruffleInstruments
 
-    # Build classpath depset:
-    # TODO(dwtj): Re-implement this using `java_common.merge()`
+    # Build a list of `JavaInfo` objects.
+    java_infos = []
+
+    # One `JavaInfo` from each direct Java dependency.
+    for dep in ctx.attr.java_deps:
+        info = dep[JavaInfo]
+        java_infos.append(info)
+
+    # One `JavaInfo` from each `truffle_instrument`.
+    for dep in ctx.attr.truffle_instruments:
+        info = dep[GraalVmTruffleInstrumentInfo].java_library[JavaInfo]
+        java_infos.append(info)
+
+    # Merge together the runtime classpaths of these `JavaInfo`s into a depset.
     runtime_classpath = depset(
-        transitive = [dep[JavaInfo].compilation_info.runtime_classpath for dep in ctx.attr.java_deps]
+        transitive = [info.compilation_info.runtime_classpath for info in java_infos]
     )
 
     # Declare a file to hold all `java` command arguments.
