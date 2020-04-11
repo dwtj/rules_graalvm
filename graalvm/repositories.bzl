@@ -28,6 +28,6 @@ def rules_graalvm_dependencies():
     _fetch_custom_rules_java()
     fetch_known_graalvm_repositories()
 
-def rules_graalvm_toolchain():
+def rules_graalvm_toolchains():
     native.register_toolchains("@rules_graalvm//graalvm/toolchains/remote/linux/x86_64:graalvm_runtime_toolchain")
     native.register_toolchains("@rules_graalvm//graalvm/toolchains/remote/linux/x86_64:graalvm_compiler_toolchain")
