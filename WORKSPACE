@@ -2,7 +2,7 @@ workspace(name = "rules_graalvm")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# USE BAZEL-FEDERATION TO FETCH RULE DEPENDENCIES #############################
+# USE BAZEL-FEDERATION TO FETCH SOME DEVELOPMENT DEPENDENCIES #################
 
 # [master] as of 2020-04-05:
 BAZEL_FEDERATION_COMMIT = "6de8b927bd8044ba07e854a9db60e6c16e026c2b"
@@ -24,18 +24,24 @@ load(
     "rules_pkg",
 )
 
+# Used in `rules_graalvm` development to declare test Java targets (e.g.
+# `java_library(...)`.
 rules_java()
 
 load("@bazel_federation//setup:rules_java.bzl", "rules_java_setup")
 
 rules_java_setup()
 
+# Used in `rules_graalvm` development to create release artifacts.
+# TODO(dwtj): Actually use this.
 rules_pkg()
 
 load("@bazel_federation//setup:rules_pkg.bzl", "rules_pkg_setup")
 
 rules_pkg_setup()
 
+# Used in `rules_graalvm` development to create documentation.
+# TODO(dwtj): Actually use this.
 bazel_stardoc()
 
 load("@bazel_federation//setup:bazel_stardoc.bzl", "bazel_stardoc_setup")
