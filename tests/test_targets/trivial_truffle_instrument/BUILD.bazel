@@ -7,5 +7,8 @@ load("@rules_java//java:defs.bzl", "java_library")
 java_library(
     name = "trivial_truffle_instrument",
     srcs = ["TrivialTruffleInstrument.java"],
-    # TODO(dwtj): Get truffle-api from somewhere, probably Maven Central.
+    deps = [
+        "@maven//:org_graalvm_sdk_graal_sdk",
+        "@maven//:org_graalvm_truffle_truffle_api",
+    ],
 )

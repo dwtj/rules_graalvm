@@ -53,3 +53,34 @@ load(
 rules_graalvm_dependencies()
 
 rules_graalvm_toolchain()
+
+
+# FETCH SOME TEST DEPENDENCIES FROM MAVEN CENTRAL #############################
+
+RULES_JVM_EXTERNAL_TAG = "3.2"
+
+RULES_JVM_EXTERNAL_SHA256 = "82262ff4223c5fda6fb7ff8bd63db8131b51b413d26eb49e3131037e79e324af"
+
+http_archive(
+    name = "rules_jvm_external",
+    sha256 = RULES_JVM_EXTERNAL_SHA256,
+    strip_prefix = "rules_jvm_external-{}".format(RULES_JVM_EXTERNAL_TAG),
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/{}.zip".format(RULES_JVM_EXTERNAL_TAG),
+)
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+ORG_GRAALVM_TRUFFLE_VERSION = "20.0.0"
+
+maven_install(
+    artifacts = [
+        "org.graalvm.truffle:truffle-api:{}".format(ORG_GRAALVM_TRUFFLE_VERSION),
+        "org.graalvm.sdk:graal-sdk:{}".format(ORG_GRAALVM_TRUFFLE_VERSION),
+    ],
+    fetch_sources = True,
+    repositories = [
+        "https://jcenter.bintray.com/",
+        "https://maven.google.com",
+        "https://repo1.maven.org/maven2",
+    ],
+)
