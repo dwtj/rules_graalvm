@@ -56,10 +56,10 @@ def _graalvm_java_test_impl(ctx):
     # Build a list of `JavaInfo` objects, one from each Truffle Instrument. Then
     # convert it to a depset.
     # TODO(dwtj): A truffle instrument was very likely built with `truffle-api`
-    #  a dependency. Currently, this will be included in this list. But surely
-    #  the GraalVM brings its own implementation of the classes in this API. I
-    #  suspect that we shouldn't append the user's copy of `truffle-api` to the
-    #  truffle classpath. So, we ought to filter somehow.
+    #  as a dependency. Currently, this will be included in this list. But
+    #  surely the GraalVM brings its own implementation of the classes in this
+    #  API. I suspect that we shouldn't append the user's copy of `truffle-api`
+    #  to the truffle classpath. So, we ought to filter somehow.
     truffle_runtime_classpath = _depset_of_runtime_classpaths_from_java_infos(
         [dep[GraalVmTruffleInstrumentInfo].java_library[JavaInfo] for dep in ctx.attr.truffle_instruments]
     )
