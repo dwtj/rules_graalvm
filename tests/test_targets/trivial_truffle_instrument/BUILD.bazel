@@ -2,13 +2,16 @@ package(
     default_visibility = ["//visibility:public"],
 )
 
-load("@rules_java//java:defs.bzl", "java_library")
+load("@rules_java//java:defs.bzl",
+     "java_library",
+)
 
 java_library(
     name = "trivial_truffle_instrument",
     srcs = ["TrivialTruffleInstrument.java"],
     deps = [
         "@maven//:org_graalvm_sdk_graal_sdk",
-        "@maven//:org_graalvm_truffle_truffle_api",
+        "@graalvm_linux_x86_64//:graalvm_truffle_dsl_processor",
+        "@graalvm_linux_x86_64//:graalvm_truffle_api",
     ],
 )

@@ -80,7 +80,6 @@ ORG_GRAALVM_TRUFFLE_VERSION = "20.0.0"
 
 maven_install(
     artifacts = [
-        "org.graalvm.truffle:truffle-api:{}".format(ORG_GRAALVM_TRUFFLE_VERSION),
         "org.graalvm.sdk:graal-sdk:{}".format(ORG_GRAALVM_TRUFFLE_VERSION),
     ],
     fetch_sources = True,
