@@ -107,25 +107,27 @@ def _configure_truffle_dsl_processor(truffle_dsl_processor_jar):
         visibility = ["//visibility:public"],
     )
 
-def _configure_compiler_toolchain(srcs):
+def _configure_compiler_toolchain(srcs, graalvm_javac_executable):
+    # TODO(dwtj): Use `srcs` or remove it.
     graalvm_compiler_toolchain(
         name = "graalvm_compiler_toolchain",
-        graalvm_truffle_api = ":graalvm_truffle_api",
+        graalvm_javac_executable = graalvm_javac_executable,
     )
 
 def _configure_runtime_toolchain(srcs, graalvm_java_executable):
+    # TODO(dwtj): Use `srcs` or remove it.
     graalvm_runtime_toolchain(
         name = "graalvm_runtime_toolchain",
-        graalvm_java_executable = graalvm_java_executable,
         srcs = srcs,
+        graalvm_java_executable = graalvm_java_executable,
     )
 
 def default_graalvm_repository(
     srcs,
     graalvm_java_executable = "//:bin/java",
+    graalvm_javac_executable = "//:bin/javac",
     truffle_api_jar = "//:lib/truffle/truffle-api.jar",
     truffle_dsl_processor_jar = "//:lib/truffle/truffle-dsl-processor.jar",
-    # TODO(dwtj): Import Graal SDK. (See `//:jmods/org.graalvm.sdk.jmod`)
     ):
     """Used to declare that a GraalVM repository provides some definitions.
 
@@ -145,7 +147,15 @@ def default_graalvm_repository(
     - `@graalvm_linux_x86_64//:graalvm_truffle_dsl_processor`
     """
     _configure_truffle_api(truffle_api_jar)
-    _configure_truffle_dsl_processor(truffle_dsl_processor_jar)
-    _configure_compiler_toolchain(srcs)
-    _configure_runtime_toolchain(srcs, graalvm_java_executable)
 
+    _configure_truffle_dsl_processor(truffle_dsl_processor_jar)
+
+    _configure_compiler_toolchain(
+        srcs = srcs,
+        graalvm_javac_executable = graalvm_javac_executable,
+    )
+
+    _configure_runtime_toolchain(
+        srcs = srcs,
+        graalvm_java_executable = graalvm_java_executable,
+    )

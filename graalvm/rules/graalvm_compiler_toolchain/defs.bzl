@@ -1,12 +1,14 @@
 GraalVmCompilerToolchainInfo = provider(
     doc = "Information about how to invoke the GraalVM.",
-    fields = ["graalvm_truffle_api"],
+    fields = [
+        "graalvm_javac_executable",
+    ],
 )
 
 def _graalvm_compiler_toolchain_impl(ctx):
     toolchain_info = platform_common.ToolchainInfo(
         graalvm_compiler_toolchain_info = GraalVmCompilerToolchainInfo(
-            graalvm_truffle_api = ctx.attr.graalvm_truffle_api,
+            graalvm_javac_executable = ctx.file.graalvm_javac_executable,
         ),
     )
     return [toolchain_info]
@@ -14,11 +16,9 @@ def _graalvm_compiler_toolchain_impl(ctx):
 graalvm_compiler_toolchain = rule(
     implementation = _graalvm_compiler_toolchain_impl,
     attrs = {
-        "graalvm_truffle_api": attr.label(
+        "graalvm_javac_executable": attr.label(
             allow_single_file = True,
-            providers = [JavaInfo],
             mandatory = True,
-            # TODO(dwtj): Maybe set a default.
-        ),
+        )
     },
 )
