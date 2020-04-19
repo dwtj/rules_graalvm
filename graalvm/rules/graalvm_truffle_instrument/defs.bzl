@@ -6,8 +6,6 @@ GraalVmTruffleInstrumentInfo = provider(
 )
 
 def _graalvm_truffle_instrument_impl(ctx):
-    # TODO(dwtj): Maybe figure out a way to validate whether the given java
-    #  library includes exactly one truffle instrument.
     return GraalVmTruffleInstrumentInfo(
         java_library = ctx.attr.java_library
     )
