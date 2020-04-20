@@ -89,6 +89,12 @@ def _graalvm_java_test_impl(ctx):
     # Build an arguments list to write to the arguments file.
     args = ctx.actions.args()
 
+    # Add all of the user's custom JVM CLI options.
+    args.add_all(
+        ctx.attr.jvm_opts,
+        omit_if_empty = True,
+    )
+
     # If there are any truffle instruments, append each to the truffle classpath.
     args.add_joined(
         truffle_runtime_classpath,
@@ -146,7 +152,11 @@ graalvm_java_test = rule(
         ),
         "truffle_instruments": attr.label_list(
             providers = [GraalVmTruffleInstrumentInfo],
-        )
+        ),
+        "jvm_opts": attr.string_list(
+            doc = "A list of command line options to pass directly to the JVM.",
+            allow_empty = True,
+        ),
     },
     test = True,
     toolchains = ["@rules_graalvm//graalvm/toolchains/runtime:toolchain_type"],
