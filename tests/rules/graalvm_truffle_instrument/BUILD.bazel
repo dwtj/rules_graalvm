@@ -1,11 +1,12 @@
-load("@rules_graalvm//graalvm:defs.bzl",
-     "graalvm_truffle_instrument",
-     "graalvm_java_test",
+load(
+    "@rules_graalvm//graalvm:defs.bzl",
+    "graalvm_java_test",
+    "graalvm_truffle_instrument",
 )
 
 graalvm_truffle_instrument(
     name = "trivial_truffle_instrument",
-    java_library = "//tests/test_targets/trivial_truffle_instrument"
+    java_library = "//tests/test_targets/trivial_truffle_instrument",
 )
 
 graalvm_java_test(
